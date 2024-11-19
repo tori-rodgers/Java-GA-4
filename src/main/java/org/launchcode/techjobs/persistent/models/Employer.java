@@ -7,9 +7,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import org.hibernate.mapping.List;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Employer extends AbstractEntity {
@@ -18,7 +18,8 @@ public class Employer extends AbstractEntity {
     @Size(min = 3, max = 100, message = "Location must be between 3 and 100 characters")
     public String location;
 
-    @OneToMany(mappedBy = "employer")
+    @OneToMany
+    @JoinColumn(name = "employer_id")
     private final List<Job> jobs = new ArrayList<>();
 
     public Employer() {
@@ -31,7 +32,6 @@ public class Employer extends AbstractEntity {
     public void setLocation(@NotEmpty @Size(max=100) String location) {
         this.location = location;
     }
-
 
 
 }
